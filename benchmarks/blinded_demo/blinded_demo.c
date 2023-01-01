@@ -3,10 +3,10 @@
 #include <string.h>
 // #include "tweetnacl.h"
 // #include "randombytes.h"
+#include "blinded.h"
 
-#include "libblinded.h"
 
-#define ARRAY_SIZE (__UINT8_MAX__)
+#define ARRAY_SIZE (256*8)
 
 volatile unsigned char g_unblinded[10];
 volatile unsigned char g_blinded[ARRAY_SIZE];
@@ -16,15 +16,21 @@ int main() {
     
     unsigned char x = 0;
 
-    memset(g_unblinded, 0x5a, 100);
+    memset(g_unblinded, 0x5a, 10);
 
     memset(g_blinded, 0x3f, ARRAY_SIZE);
+    // printf("Hi hi hi!\n");
     blind(g_blinded, ARRAY_SIZE);
+    // printf("Mid\n");
+    // if (g_blinded[128] > 1) {
+    //     printf("Branched based on blinded value.\n");
+    // }
+    printf("After\n");
 
     memset(g_blinded2, 0x2c, ARRAY_SIZE);
     blind(g_blinded2, ARRAY_SIZE);
 
-    int op = 3;
+    int op = 4;
     printf("Test case: %d\n", op);
     switch (op) {
         case 1: // try to read from blinded memory -------------------------------- PASS
