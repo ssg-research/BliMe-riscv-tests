@@ -40,6 +40,13 @@ int main() {
     g_blinded[15] = 0x00;
     memset(g_blinded+16, 0x3f, ARRAY_SIZE-16);
 
+    // printf("Unblinded array (before):");
+    // for (unsigned int i = 0; i < ARRAY_SIZE; ++i) {
+    //     if (i % 4 == 0)
+    //         printf("\n");
+    //     printf("%x ", g_blinded[i]);
+    // }
+
     // printf("Hi hi hi!\n");
     blind(g_blinded, ARRAY_SIZE);
     // printf("Mid\n");
@@ -48,26 +55,26 @@ int main() {
     // }
     printf("After\n");
 
-    g_blinded[0] = 0x00;
-    g_blinded[1] = 0x00;
-    g_blinded[2] = 0x00;
-    g_blinded[3] = 0x00;
-    g_blinded[4] = 0x4a;
-    g_blinded[5] = 0x00;
-    g_blinded[6] = 0x00;
-    g_blinded[7] = 0x00;
-    g_blinded[8] = 0x09;
-    g_blinded[9] = 0x00;
-    g_blinded[10] = 0x00;
-    g_blinded[11] = 0x00;
-    g_blinded[12] = 0x00;
-    g_blinded[13] = 0x00;
-    g_blinded[14] = 0x00;
-    g_blinded[15] = 0x00;
+    g_blinded2[0] = 0x00;
+    g_blinded2[1] = 0x00;
+    g_blinded2[2] = 0x00;
+    g_blinded2[3] = 0x00;
+    g_blinded2[4] = 0x4a;
+    g_blinded2[5] = 0x00;
+    g_blinded2[6] = 0x00;
+    g_blinded2[7] = 0x00;
+    g_blinded2[8] = 0x09;
+    g_blinded2[9] = 0x00;
+    g_blinded2[10] = 0x00;
+    g_blinded2[11] = 0x00;
+    g_blinded2[12] = 0x00;
+    g_blinded2[13] = 0x00;
+    g_blinded2[14] = 0x00;
+    g_blinded2[15] = 0x00;
     memset(g_blinded2+16, 0x2c, ARRAY_SIZE-16);
     blind(g_blinded2, ARRAY_SIZE);
 
-    int op = 1;
+    int op = 5;
     printf("Test case: %d\n", op);
     switch (op) {
         case 1: // try to read from blinded memory -------------------------------- PASS
@@ -78,7 +85,7 @@ int main() {
 		case 2: // writing into blinded memory ------------------------------------ PASS
             g_blinded[16] = 5;
             g_blinded[17] = g_blinded2[16] + 1;
-            // printf("%d %d\n", g_blinded[0], g_blinded[1]);
+            printf("Overwritten: %d\n", g_blinded[16]);
             break;
 
 		// ########################
@@ -119,7 +126,7 @@ int main() {
 
     unblind(g_blinded, ARRAY_SIZE);
 
-    printf("Unblinded array:");
+    printf("Unblinded array (after):");
     for (unsigned int i = 0; i < ARRAY_SIZE; ++i) {
         if (i % 4 == 0)
             printf("\n");
